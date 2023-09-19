@@ -22,11 +22,7 @@ jobs:
         run: mvn --batch-mode --update-snapshots clean install
 
       - name: Analyze with SonarCloud
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: SonarSource/sonarcloud-github-action@v0.4.2
         with:
-          token: ${{ secrets.SONAR_TOKEN }} # Токен SonarCloud
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # Токен Codecov
+          entryPoint: 'auto' # Используйте значение 'auto', чтобы автоматически найти файл sonar-project.properties
+          projectBaseDir: './' # Если необходимо указать каталог проекта
