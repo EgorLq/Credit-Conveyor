@@ -32,5 +32,5 @@ jobs:
           SECRET_NAME: ${{ secrets.SECRET_NAME }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          entryPoint: 'auto' # Используйте значение 'auto', чтобы автоматически найти файл sonar-project.properties
+          entryPoint: 'sonar-scanner' # Используйте значение 'auto', чтобы автоматически найти файл sonar-project.properties
           projectBaseDir: './' # Если необходимо указать каталог проекта
