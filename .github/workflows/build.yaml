@@ -22,7 +22,7 @@ jobs:
         run: mvn --batch-mode --update-snapshots clean install
 
       - name: Analyze with SonarCloud
-        uses: sonarsource/sonarcloud-github-action@v1
+        uses: sonarsource/sonarcloud-github-action@master
         with:
           token: ${{ secrets.SONAR_TOKEN }} # Токен SonarCloud
 
