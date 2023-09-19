@@ -13,10 +13,20 @@ jobs:
       - name: Set up JDK 18
         uses: actions/setup-java@v2
         with:
-          java-version: '18' # Версия Java, которую вы хотите установить
-          distribution: 'adopt' # Распределение JDK
-          token: ${{ secrets.SECRET_NAME}} # Токен GitHub
-          cache: 'maven' # Кешировать зависимости Maven (если требуется)
+          java-version: '18'
+          distribution: 'adopt'
+          token: ${{ secrets.SECRET_NAME}}
+          cache: 'maven'
 
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots clean install
+
+      - name: Analyze with SonarCloud
+        uses: sonarsource/sonarcloud-github-action@v1
+        with:
+          token: ${{ secrets.SONAR_TOKEN }} # Токен SonarCloud
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # Токен Codecov
