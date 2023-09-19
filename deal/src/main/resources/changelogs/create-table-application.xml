@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+        <changeSet id="create-table-application" author="pylaevDmitry">
+            <createTable tableName="application">
+                <column autoIncrement="true" name="id" type="bigint">
+                    <constraints  primaryKey="true"  nullable="false"/>
+                </column>
+                <column name="fk_client_id" type="bigint">
+                    <constraints foreignKeyName="fk_client_id" references="client(id)" nullable="false"/>
+                </column>
+                <column name="fk_credit_id" type="bigint">
+                    <constraints foreignKeyName="fk_credit_id" references="credit(id)"/>
+                </column>
+                <column name="status" type="varchar(50)">
+                    <constraints  nullable="false"/>
+                </column>
+                <column name="creation_date" type="timestamp">
+                    <constraints  nullable="false"/>
+                </column>
+                <column name="applied_offer" type="jsonb">
+                </column>
+                <column name="sign_date" type="timestamp">
+                </column>
+                <column name="ses_code" type="varchar(50)">
+                </column>
+                <column name="status_history" type="jsonb">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+        </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,25 @@
+# Logging
+logging:
+  config: classpath:log4j2.xml
+  level:
+    root: info
+
+# Port
+server:
+  port: 8082
+
+# Deal Destination
+deal:
+  destination: ${DEAL_DESTINATION:localhost:8080/deal}
+
+# Application
+nameLengthMin: 2
+nameLengthMax: 30
+minTerm: 6
+minAge: 18
+emailPattern:
+  regexp: "[\\w.]{2,50}@[\\w.]{2,20}"
+passportSeriesPattern:
+  regexp: "\\d{4}"
+passportNumberPattern:
+  regexp: "\\d{6}"

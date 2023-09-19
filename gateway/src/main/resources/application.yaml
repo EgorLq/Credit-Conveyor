@@ -1,0 +1,17 @@
+# Logging
+logging:
+  config: classpath:log4j2.xml
+  level:
+    root: info
+
+# Port
+server:
+  port: 8084
+
+# Deal Destination
+deal:
+  destination: ${DEAL_DESTINATION:localhost:8080/deal}
+
+# Application Destination
+application:
+  destination: ${APPLICATION_DESTINATION:localhost:8082/application}

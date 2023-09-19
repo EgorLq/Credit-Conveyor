@@ -1,0 +1,89 @@
+version: '3'
+
+services:
+  gateway:
+    build: gateway
+    depends_on:
+      - deal
+    ports:
+      - "8084:8084"
+    environment:
+      - DEAL_DESTINATION=neoflex-project-deal-1:8080/deal
+      - APPLICATION_DESTINATION=neoflex-project-application-1:8082/application
+
+  dossier:
+    build: dossier
+    depends_on:
+      - kafka
+    ports:
+      - "8083:8083"
+    volumes:
+      - deal-volume:/local/bank_doc_folder
+    environment:
+      - KAFKA_SERVERS=neoflex-project-kafka-1:29092
+      - DOCUMENT_FOLDER=/local/bank_doc_folder/
+
+  application:
+    build: application
+    ports:
+      - "8082:8082"
+    environment:
+      - DEAL_DESTINATION=neoflex-project-deal-1:8080/deal
+
+  deal:
+    build: deal
+    depends_on:
+      - kafka
+      - db
+    ports:
+      - "8080:8080"
+    volumes:
+      - deal-volume:/local/bank_doc_folder
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/bank_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - KAFKA_SERVERS=neoflex-project-kafka-1:29092
+      - CONVEYOR_DESTINATION=neoflex-project-conveyor-1:8081/conveyor
+      - DOCUMENT_FOLDER=/local/bank_doc_folder/
+
+  conveyor:
+    build: conveyor
+    ports:
+      - "8081:8081"
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "22181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://neoflex-project-kafka-1:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  db:
+    image: postgres:13.1-alpine
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=bank_db
+    ports:
+      - "5432:5432"
+
+volumes:
+  deal-volume:
+    external: false

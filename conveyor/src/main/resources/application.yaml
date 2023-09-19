@@ -1,0 +1,26 @@
+# Logging
+logging:
+  config: classpath:log4j2.xml
+  level:
+    root: info
+
+# Port
+server:
+  port: 8081
+
+# Application
+baseRate: 15
+denyRate: 999
+insurancePrice: 10000
+insuranceRateDiscount: 1.0
+salaryClientRateDiscount: 0.5
+salaryMinCoefficient: 20
+minAge: 18
+maxAge: 60
+workExperienceTotalMin: 12
+workExperienceCurrentMin: 3
+singledRateDiscount: -1.0
+marriedRateDiscount: 3.0
+middleRateDiscount: 2.0
+seniorRateDiscount: 4.0
+dependentAmountRateDiscount: -1.0
