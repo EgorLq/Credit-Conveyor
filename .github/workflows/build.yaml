@@ -22,7 +22,10 @@ jobs:
         run: mvn --batch-mode --update-snapshots clean install
 
       - name: Analyze with SonarCloud
-        uses: SonarSource/sonarcloud-github-action@v0.4.2
+        uses:  sonarsource/sonarcloud-github-action@master
+        env:
+          SECRET_NAME: ${{ secrets.SECRET_NAME }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           entryPoint: 'auto' # Используйте значение 'auto', чтобы автоматически найти файл sonar-project.properties
           projectBaseDir: './' # Если необходимо указать каталог проекта
