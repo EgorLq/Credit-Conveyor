@@ -10,5 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 public class DossierApplication {
     public static void main(String[] args) {
         ApplicationContext context = new SpringApplicationBuilder(DossierApplication.class).headless(false).run(args);
+
     }
 }
