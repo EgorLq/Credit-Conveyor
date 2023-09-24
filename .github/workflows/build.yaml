@@ -26,7 +26,6 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_NAME }}
